@@ -4,7 +4,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+<<<<<<< HEAD
 	"io"
+=======
+	"io/ioutil"
+>>>>>>> c6e6fc19bb6a510d9f0314b1619dbea5d8eb678d
 	"net/http"
 )
 
