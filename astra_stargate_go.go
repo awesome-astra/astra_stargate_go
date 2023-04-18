@@ -1,4 +1,4 @@
-package astra_stargate
+package astra_stargate_go
 
 import (
 	"bytes"
