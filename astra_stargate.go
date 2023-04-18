@@ -3,6 +3,7 @@ package astra_stargate
 import (
 	"bytes"
 	"fmt"
+	"golang.org/x/net/http2"
 	"io"
 	"net/http"
 )
@@ -30,7 +31,7 @@ func (s *Client) GetURL() string {
 
 func (s *Client) APIPost(path string, payload *bytes.Buffer) (string, error) {
 	url := fmt.Sprintf(s.baseURL+"%s", path)
-	req, err := http.NewRequest("POST", url, payload)
+	req, err := http2.NewRequest(http.MethodPost, url, payload)
 	if err != nil {
 		return "", err
 	}
@@ -41,7 +42,7 @@ func (s *Client) APIPost(path string, payload *bytes.Buffer) (string, error) {
 
 func (s *Client) APIPut(path string, payload *bytes.Buffer) (string, error) {
 	url := fmt.Sprintf(s.baseURL+"%s", path)
-	req, err := http.NewRequest("PUT", url, payload)
+	req, err := http2.NewRequest(http.MethodPut, url, payload)
 	if err != nil {
 		return "", err
 	}
@@ -52,7 +53,7 @@ func (s *Client) APIPut(path string, payload *bytes.Buffer) (string, error) {
 
 func (s *Client) APIDelete(path string) (string, error) {
 	url := fmt.Sprintf(s.baseURL+"%s", path)
-	req, err := http.NewRequest("DELETE", url, nil)
+	req, err := http2.NewRequest(http.MethodDelete, url, nil)
 	if err != nil {
 		return "", err
 	}
@@ -64,7 +65,7 @@ func (s *Client) APIDelete(path string) (string, error) {
 func (s *Client) APIGet(path string) (string, error) {
 	url := fmt.Sprintf(s.baseURL+"%s", path)
 
-	req, err := http.NewRequest("GET", url, nil)
+	req, err := http2.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return "", err
 	}
@@ -77,7 +78,10 @@ func (s *Client) doRequest(req *http.Request) (string, error) {
 	req.Header.Set("Authorization", "Bearer: "+s.Token)
 	req.Header.Set("x-cassandra-token", s.Token)
 	req.Header.Set("Content-Type", "application/json")
-	client := &http.Client{}
+	req.Header.Set("Connection", "keep-alive")
+	client := &http.Client{
+		Timeout: 10 * time.Second,
+	}
 
 	resp, err := client.Do(req)
 
