@@ -1,3 +1,3 @@
-module github.com/awesome-astra/astra_stargate_go v0.0.1
+module github.com/awesome-astra/astra_stargate_go 
 
 go 1.20
