@@ -31,7 +31,7 @@ func (s *Client) GetURL() string {
 
 func (s *Client) APIPost(path string, payload *bytes.Buffer) (string, error) {
 	url := fmt.Sprintf(s.baseURL+"%s", path)
-	req, err := http2.NewRequest(http.MethodPost, url, payload)
+	req, err := http.NewRequest(http.MethodPost, url, payload)
 	if err != nil {
 		return "", err
 	}
@@ -42,7 +42,7 @@ func (s *Client) APIPost(path string, payload *bytes.Buffer) (string, error) {
 
 func (s *Client) APIPut(path string, payload *bytes.Buffer) (string, error) {
 	url := fmt.Sprintf(s.baseURL+"%s", path)
-	req, err := http2.NewRequest(http.MethodPut, url, payload)
+	req, err := http.NewRequest(http.MethodPut, url, payload)
 	if err != nil {
 		return "", err
 	}
@@ -53,7 +53,7 @@ func (s *Client) APIPut(path string, payload *bytes.Buffer) (string, error) {
 
 func (s *Client) APIDelete(path string) (string, error) {
 	url := fmt.Sprintf(s.baseURL+"%s", path)
-	req, err := http2.NewRequest(http.MethodDelete, url, nil)
+	req, err := http.NewRequest(http.MethodDelete, url, nil)
 	if err != nil {
 		return "", err
 	}
@@ -65,7 +65,7 @@ func (s *Client) APIDelete(path string) (string, error) {
 func (s *Client) APIGet(path string) (string, error) {
 	url := fmt.Sprintf(s.baseURL+"%s", path)
 
-	req, err := http2.NewRequest(http.MethodGet, url, nil)
+	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return "", err
 	}
